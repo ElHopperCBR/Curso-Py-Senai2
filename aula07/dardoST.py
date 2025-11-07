@@ -1,4 +1,12 @@
 import streamlit as st
+def grafico(datsu1,datsu2,datsu3):
+    #Apresentaçao de grafico exibindo lançamento
+    st.area_chart([0, datsu1],
+                  use_container_width=True,height=200, color="#eaff00")
+    st.area_chart([0, datsu2],
+                  use_container_width=True,height=200, color="#f65200")
+    st.area_chart([0, datsu3],
+                  use_container_width=True,height=200, color="#5100ff")
 st.title("🎯Simulaçao de lançamento de Dardos🎯")
 '''Simulaçao de lançamento de tres dardos.
 O objetivo do aplicativo e mostrar o dardo com a maior distancia'''
@@ -11,13 +19,20 @@ with coluna2:
     dardo2 = st.number_input("Distancia do 2° Dardo",min_value=0)
 with coluna3:
     dardo3 = st.number_input("Distancia do 3° Dardo",min_value=0)
+maior_distancia = max(dardo1,dardo2,dardo3)
 #Estrutura de controle de decisao
 if (dardo1 > dardo2) and (dardo1 > dardo3):
     dardo_vencedor = "Dardo 1"
 elif (dardo2 > dardo1) and (dardo2 > dardo3):
     dardo_vencedor = "Dardo 2"
-else:
+elif (dardo3 > dardo1) and (dardo3 > dardo2):
     dardo_vencedor = "Dardo 3"
+elif (dardo1 == dardo2) or (dardo1 == dardo3) or (dardo2 == dardo3):
+    dardo_vencedor = "Empate"
 #Saida de dados
 if st.button("Apresentar resultados de lançamento"):
-    st.write(f"O dardo com a maior distancia e {dardo_vencedor}")
+    if dardo_vencedor == "Empate":
+        st.write("Houve empate sem vencedores")
+    else:
+        st.write(f"O dardo com a maior distancia e {dardo_vencedor} com {maior_distancia}")
+        grafico(dardo1,dardo2,dardo3)
